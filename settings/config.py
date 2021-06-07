@@ -18,9 +18,13 @@ code = "https://github.com/cmosquerat?tab=repositories"
 
 fontawesome = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'
 
-data = "tabla.xlsx"
+data_mun = "municipios.csv"
 
-geojson = "colombia.geo.json"
+data_depto = "departamentos.csv"
+
+geojson_deptos = "colombia.geo.json"
+
+geojson_mun = "municipios_geojson.geojson"
 
 not_elements = {"Unnamed: 0",'municipio', 'departamento'}
 

@@ -1,17 +1,20 @@
 
 import pandas as pd
 from settings import config
-import geopandas as gpd
 import numpy as np
 import difflib
-
+import json
 
 class Data():
     
     def get_data(self):
-        self.df = pd.read_excel(config.root+"/application/static/" + config.data)
-        self.geojson = gpd.read_file(config.root+"/application/static/" + config.geojson)
-        self.elementos =  [ele for ele in self.df.columns.tolist() if ele not in config.not_elements]
+        self.df_dep = pd.read_csv(config.root+"/application/static/" + config.data_depto)
+        self.df_mun = pd.read_csv(config.root+"/application/static/" + config.data_mun)
+        self.geojson_depto = json.load(open(config.root+"/application/static/" + config.geojson_deptos))
+        self.geojson_mun = json.load(open(config.root+"/application/static/" + config.geojson_mun))
+        self.elementos =  [ele for ele in self.df_dep.columns.tolist() if ele not in config.not_elements]
+
+
 
 
 

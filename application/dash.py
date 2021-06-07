@@ -19,23 +19,26 @@ from python.result import Result
 data = Data()
 data.get_data()
 
-df_means = data.multilab_preprocess_means()
+df_depto = data.df_dep
 
-df_samples = data.preprocess_samples()
+df_mun =  data.df_mun
 
-geojson = data.geojson
+geojson_dpto = data.geojson_depto
 
-result = Result(df_samples,df_means,geojson)
+geojson_mun = data.geojson_mun
 
-n_muestras = len(data.df.index)
-n_deptos = len(df_means.index)
-n_mun = data.df["municipio"].nunique()
+result = Result(df_depto,df_mun,geojson_dpto,geojson_mun)
+
+n_muestras = sum(df_depto['muestras'])
+print(n_muestras)
+n_deptos = len(df_depto.index)
+n_mun = data.df_mun["municipio"].nunique()
 
 
 
 # App Instance
 app = dash.Dash(name=config.name, assets_folder=config.root+"/application/static", external_stylesheets=[dbc.themes.PULSE, config.fontawesome])
-app.title = config.name
+app.title = "Multilab"
 
 
 
@@ -44,24 +47,13 @@ navbar = dbc.Nav(className="nav nav-pills", children=[
     ## logo/home
     dbc.NavItem(html.Img(src=app.get_asset_url("logo.PNG"), height="40px")),
     ## about
-    dbc.NavItem(html.Div([
-        dbc.NavLink("Acerca de", href="/", id="about-popover", active=False),
-        dbc.Popover(id="about", is_open=False, target="about-popover", children=[
-            dbc.PopoverHeader("Prueba de dashboard"), dbc.PopoverBody(about.txt)
-        ])
-    ])),
-    ## links
-    dbc.DropdownMenu(label="Links", nav=True, children=[
-        dbc.DropdownMenuItem([html.I(className="fa fa-linkedin"), "  Contacts"], href=config.contacts, target="_blank"), 
-        dbc.DropdownMenuItem([html.I(className="fa fa-github"), "  Code"], href=config.code, target="_blank")
-    ])
 ])
 
 
 
 # Input
 inputs = dbc.FormGroup([
-    html.H4("Seleccionar Elemento"),
+    html.H4("Seleccionar tipo de muestra"),
     dcc.Dropdown(id="country", options=[{"label":x,"value":x} for x in data.elementos], value="ph")
 ]) 
 
@@ -84,14 +76,17 @@ app.layout = dbc.Container(fluid=True, children=[
         ]),
         ### plots
         dbc.Col(md=9, children=[
-            dbc.Col(html.H4("Gráficas Georreferenciadas"), width={"size":6,"offset":3}), 
+            dbc.Col(html.H4(""), width={"size":6,"offset":3}), 
             dbc.Tabs(className="nav nav-pills", children=
             [
-                dbc.Tab(label="Elemento Químico", tab_id="tab-1"),
-                dbc.Tab(label="Muestras", tab_id="tab-2"),
+                dbc.Tab(label="Elemento Químico Depto", tab_id="tab-1",active_label_style={"background": "#1226AA"}),
+                dbc.Tab(label="Elemento Químico Mpio", tab_id="tab-4",active_label_style={"background": "#1226AA"}),
+                dbc.Tab(label="Muestras Depto", tab_id="tab-2",active_label_style={"background": "#1226AA"}),
+                dbc.Tab(label="Muestras Mpio", tab_id="tab-3",active_label_style={"background": "#1226AA"}),
             ],
             id="tabs",
             active_tab="tab-1",
+            
         ),
          html.Div(id="content"),
         ])
@@ -105,6 +100,12 @@ def switch_tab(at):
         return dcc.Graph(id="plot-total")
     elif at == "tab-2":
         return dcc.Graph(id="plot-active")
+    elif at == "tab-3":
+        return dcc.Graph(id="plot-mun")
+    elif at == "tab-4":
+        return dcc.Graph(id="plot-emun")
+        
+        
     
 
 
@@ -125,32 +126,38 @@ def about_active(n, active):
 
 
 
-# Python function to plot total cases
+
 @app.callback(output=Output("plot-total","figure"), inputs=[Input("country","value")]) 
 def plot_total_cases(country):
     return result.plot_element(country)
 
 
 
-# Python function to plot active cases
+
 @app.callback(output=Output("plot-active","figure"), inputs=[Input("country","value")])
 def plot_active_cases(country):
     return result.plot_total()
     
+@app.callback(output=Output("plot-mun","figure"), inputs=[Input("country","value")])
+def plot_active_cases(country):
+    return result.plot_mun()
 
-    
-# Python function to render output panel
+@app.callback(output=Output("plot-emun","figure"), inputs=[Input("country","value")])
+def plot_active_cases(country):
+    return result.plot_elemnt_mun(country)
+
+ 
 @app.callback(output=Output("output-panel","children"), inputs=[Input("country","value")])
 def render_output_panel(country):
     panel = html.Div([
         html.H4("Alcance de Multilab"),
-        dbc.Card(body=True, className="text-white bg-primary", children=[
+        dbc.Card(body=True, className="text-white",style={"background":"#1226AA"}, children=[
             
             html.H6("Total muestras procesadas", style={"color":"white"}),
             html.H3("{:,.0f}".format(n_muestras), style={"color":"white"}),
             
-            html.H6("Número de departamentos en los que se tiene presencia", className="text-danger"),
-            html.H3("{:,.0f}".format(n_deptos), className="text-danger"),
+            html.H6("Número de departamentos en los que se tiene presencia", style={"color":"#80BC00"}),
+            html.H3("{:,.0f}".format(n_deptos), style={"color":"#80BC00"}),
             
             html.H6("Número de municipios en los que se tiene presencia", style={"color":"white"}),
             html.H3("{:,.0f}".format(n_mun), style={"color":"white"}),
