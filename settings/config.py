@@ -26,7 +26,9 @@ geojson_deptos = "colombia.geo.json"
 
 geojson_mun = "municipios_geojson.geojson"
 
-not_elements = {"Unnamed: 0",'municipio', 'departamento'}
+not_elements = {'Unnamed: 0','municipio', 'departamento', 'muestras', "unnamed: 0", "Rango moda ph", "Rango moda n",
+ "Rango moda mo","Rango moda k","Rango moda ca", "Rango moda mg", "Rango moda na", "Rango moda al", "Rango moda cic", "Rango moda p"
+ ,"Rango moda fe", "Rango moda mn", "Rango moda zn", "Rango moda cu", "Rango moda s", "Rango moda b", "Rango moda ar", "Rango moda l", "Rangos moda a" }
 
 
 ## File system

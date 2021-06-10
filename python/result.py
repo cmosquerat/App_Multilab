@@ -68,7 +68,17 @@ class Result():
         return fig  
 
     def plot_elemnt_mun(self,element):
-        ## main plots
+       
+        if "Rangos" not in element:
+            element = element
+            hover = "Rangos " + element
+            Title = 'Promedio de ' + element + " por municipio"
+        else: 
+            hover = element
+            element = "Rango moda " + element.replace("Rangos ", "")
+            Title = hover + " mpio"
+
+
         fig = px.choropleth(data_frame=self.df_mun, 
                     geojson=self.geojson_mun, 
                     locations='municipio', # nombre de la columna del Dataframe
@@ -77,13 +87,14 @@ class Result():
                     color_continuous_scale=["white", "#1226AA"], #greens
                     hover_name="municipio",
                     hover_data={'municipio':False,
-                    "Rangos " + element: True}
+                    hover: True,
+                    hover.replace("Rangos ",""):':.2f'}
                     #scope="north america"
                    )
         fig.update_geos(showcountries=True, showcoastlines=False, showland=False, fitbounds="locations")
 
         fig.update_layout(
-            title_text='Promedio de ' + element + " por municipio",
+            title_text=Title,
             autosize=False,
             width=1000,
             height=600,
@@ -97,6 +108,19 @@ class Result():
         
         
     def plot_element(self,element):
+
+        if "Rangos" not in element:
+            element = element
+            hover = "Rangos " + element
+            Title = 'Promedio de ' + element + " por departamento"
+        else: 
+            hover = element
+            element = "Rango moda " + element.replace("Rangos ", "")
+            Title = hover
+            
+
+        
+
         ## main plots
         fig = px.choropleth(data_frame=self.df_depto, 
                     geojson=self.geojson_depto, 
@@ -106,12 +130,13 @@ class Result():
                     color_continuous_scale=["white", "#1226AA"], #greens
                     hover_name="departamento",
                     hover_data={'departamento':False,
-                    "Rangos " + element: True}
+                    hover: True,
+                    hover.replace("Rangos ",""):':.2f'}
                    )
         fig.update_geos(showcountries=True, showcoastlines=False, showland=False, fitbounds="locations")
 
         fig.update_layout(
-            title_text='Promedio de ' + element + " por departamento",
+            title_text=Title,
             width=1000,
             height=600,
             hoverlabel=dict(
