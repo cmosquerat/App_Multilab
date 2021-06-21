@@ -128,22 +128,27 @@ def about_active(n, active):
 
 
 @app.callback(output=Output("plot-total","figure"), inputs=[Input("country","value")]) 
-def plot_total_cases(country):
+def plot_total_cases1(country):
     return result.plot_element(country)
 
 
 
 
-@app.callback(output=Output("plot-active","figure"), inputs=[Input("country","value")])
-def plot_active_cases(country):
-    return result.plot_total()
+
+
+@app.callback(output=Output("plot-active","figure"), inputs=[Input("plot-active","clickData")])
+def plot_active_cases2(clickData):
+    if clickData is not None:
+        return result.plot_total(clickData['points'][0]['location'])
+    else: 
+        return result.plot_total(None)
     
 @app.callback(output=Output("plot-mun","figure"), inputs=[Input("country","value")])
-def plot_active_cases(country):
+def plot_active_cases3(country):
     return result.plot_mun()
 
 @app.callback(output=Output("plot-emun","figure"), inputs=[Input("country","value")])
-def plot_active_cases(country):
+def plot_active_cases4(country):
     return result.plot_elemnt_mun(country)
 
  

@@ -6,7 +6,7 @@ import os
 ## Configuraciones
 name = "Multilab Agroanalítica"
 
-host = "192.168.101.48"
+host = "0.0.0.0"
 
 port = int(os.environ.get("PORT", 5000))
 
