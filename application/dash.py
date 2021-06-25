@@ -127,9 +127,13 @@ def about_active(n, active):
 
 
 
-@app.callback(output=Output("plot-total","figure"), inputs=[Input("country","value")]) 
-def plot_total_cases1(country):
-    return result.plot_element(country)
+@app.callback(output=Output("plot-total","figure"), inputs=[Input("country","value"),Input("plot-total","clickData")])
+def plot_total_cases1(country,clickData):
+    print("Estoy aquí?")
+    if clickData is not None:
+        return result.plot_element(country,clickData['points'][0]['location'])
+    else: 
+        return result.plot_element(country,None)
 
 
 
