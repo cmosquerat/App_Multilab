@@ -32,8 +32,8 @@ class Result():
             fig.update_layout(
                 title_text='Muestras Multilab Agroanalítica 2019 (MPIO)',
                 autosize=False,
-                width=1000,
-                height=600,
+                width=1280,
+                height=720,
                 hoverlabel=dict(
                     bgcolor="#870064",
                 
@@ -59,8 +59,8 @@ class Result():
             fig.update_layout(
                 title_text='Muestras Multilab Agroanalítica 2019',
                 autosize=False,
-                width=1000,
-                height=600,
+                width=1280,
+                height=720,
                 hoverlabel=dict(
                     bgcolor="#870064",
                     
@@ -90,8 +90,8 @@ class Result():
         fig.update_layout(
             title_text='Muestras Multilab Agroanalítica 2019 (MPIO)',
             autosize=False,
-            width=1000,
-            height=600,
+            width=1280,
+            height=720,
             hoverlabel=dict(
                 bgcolor="#870064",
                
@@ -129,8 +129,8 @@ class Result():
         fig.update_layout(
             title_text=Title,
             autosize=False,
-            width=1000,
-            height=600,
+            width=1280,
+            height=720,
             hoverlabel=dict(
                 bgcolor="#870064",
                
@@ -171,8 +171,8 @@ class Result():
             fig.update_layout(
                 title_text=Title,
                 autosize=False,
-                width=1000,
-                height=600,
+                width=1280,
+                height=720,
                 hoverlabel=dict(
                     bgcolor="#870064",
                 
@@ -212,8 +212,8 @@ class Result():
 
             fig.update_layout(
                 title_text=Title,
-                width=1000,
-                height=600,
+                width=1280,
+                height=720,
                 hoverlabel=dict(
                     bgcolor="#870064",
                     
