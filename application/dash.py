@@ -71,6 +71,11 @@ inputs = dbc.FormGroup([
     dcc.Dropdown(id="country", options=[{"label":x,"value":x} for x in data.elementos], value="ph")
 ]) 
 
+inputs_rangos = dbc.FormGroup([
+    html.H4("Seleccionar tipo de muestra"),
+    dcc.Dropdown(id="country", options=[{"label":x,"value":x} for x in data.rangos], value="Rangos ph")
+]) 
+
 
 
 # App Layout
@@ -158,6 +163,19 @@ app4 = dbc.Row(
     ,justify="center", align="center")
 
 
+app5 = dbc.Row(
+    
+    children=[dcc.Graph(id="plot-total"),inputs_rangos]
+    ,justify="center", align="center")
+
+app6 = dbc.Row(
+    
+    children=[dcc.Graph(id="plot-emun"),inputs_rangos]
+    ,justify="center", align="center")
+
+
+
+
 
 
 @app.callback(Output('page-content', 'children'),
@@ -172,6 +190,10 @@ def display_page(pathname):
         return app3
     if pathname == '/cuatro':
         return app4
+    if pathname == '/cinco':
+        return app5
+    if pathname == '/seis':
+        return app6
     else:
         return "404"
 

@@ -120,7 +120,7 @@ class Result():
                     color_continuous_scale=["white", "#1226AA"], #greens
                     hover_name="municipio",
                     hover_data={'municipio':False,
-                    hover: True,
+                    hover : True,
                     hover.replace("Rangos ",""):':.2f'}
                     #scope="north america"
                    )

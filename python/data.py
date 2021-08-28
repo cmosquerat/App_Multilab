@@ -12,7 +12,8 @@ class Data():
         self.df_mun = pd.read_csv(config.root+"/application/static/" + config.data_mun)
         self.geojson_depto = json.load(open(config.root+"/application/static/" + config.geojson_deptos))
         self.geojson_mun = json.load(open(config.root+"/application/static/" + config.geojson_mun))
-        self.elementos =  [ele for ele in self.df_dep.columns.tolist() if ele not in config.not_elements]
+        self.elementos =  [ele for ele in self.df_dep.columns.tolist() if ele not in config.not_elements and ele not in config.rangos]
+        self.rangos =  [ele for ele in self.df_dep.columns.tolist() if ele not in config.not_elements and ele not in config.elementos]
 
 
 
